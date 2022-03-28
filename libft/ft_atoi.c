@@ -6,7 +6,7 @@
 /*   By: juhan <juhan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/07 14:52:13 by juhan             #+#    #+#             */
-/*   Updated: 2022/03/23 15:45:07 by juhan            ###   ########.fr       */
+/*   Updated: 2022/03/28 19:45:50 by juhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,13 @@ int	ft_atoi(const char *str)
 			neg = -1;
 		str++;
 	}
-	while (*str && ft_isdigit(*str))
+	while (*str && (ft_isdigit(*str) || *str == '\n'))
 	{
+		if (*str == '\n')
+		{
+			str++;
+			break ;
+		}
 		val *= 10;
 		val += *str - '0';
 		str++;
