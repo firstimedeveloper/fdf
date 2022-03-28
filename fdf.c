@@ -81,10 +81,51 @@ void	parse_map(t_map *m, int fd)
 	}
 }
 
-void draw(t_map *m)
+void	ft_mlx_pixel_put(t_map *m, int x, int y)
+{
+	char	*dst;
+
+	dst = m->addr + (y * m->line_length + x * (m->bpp / 8));
+	*(unsigned int*)dst = 0xFFFFFFFF;
+}
+
+void	draw_line(t_map *m, int a, int b, int c, int d)
+{
+	int	dx;
+	int	dy;
+	int	D;
+	int	x;
+	int	y;
+
+	dx = c - a;
+	dy = d - b;
+	D = 2 * dy - dx;
+	x = a;
+	y = b;
+	while (x <= c)
+	{
+		ft_mlx_pixel_put(m, x, y);
+		if (D > 0)
+		{
+			y++;
+			D = D - 2 * dx;
+		}
+		D = D + 2 * dy;
+		x++;
+	}
+
+}
+
+void	draw(t_map *m)
 {
 	m->mlx = mlx_init();
 	m->win = mlx_new_window(m->mlx, 500, 500, "fdf");
+	m->img = mlx_new_image(m->mlx, 500, 500);
+	m->addr = mlx_get_data_addr(m->img, &m->bpp, &m->line_length, &m->endian);
+
+	ft_mlx_pixel_put(m, 300, 300);
+	draw_line(m, 100, 100, 200, 200);
+	mlx_put_image_to_window(m->mlx, m->win, m->img, 0, 0);
 	mlx_loop(m->mlx);
 }
 
