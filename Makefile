@@ -1,5 +1,5 @@
 CC = gcc -Wall -Werror -Wextra
-LIBX_PATH=minilibx_opengl_20191021
+LIBX_PATH=./minilibx_opengl_20191021
 LIBX_FLAG=-framework OpenGl -framework Appkit
 LIB_PATH=libft
 
@@ -8,6 +8,8 @@ SRCS=$(addsuffix .c, $(FILE_NAMES))
 OBJS=$(SRCS:.c=.o)
 
 NAME=fdf
+
+all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB_PATH)/libft.a $(LIBX_PATH)/libmlx.a
 	$(CC) $(LIBX_PATH)/libmlx.a $(LIBX_FLAG) $(LIB_PATH)/libft.a $(OBJS) -o $@
