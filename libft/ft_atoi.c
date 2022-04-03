@@ -43,7 +43,7 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	val *= neg;
-	if (val < -2147483648 || val > 2147483647 || *str)
+	if (val < -2147483648 || val > 2147483647)
 		err();
 	return (val);
 }
