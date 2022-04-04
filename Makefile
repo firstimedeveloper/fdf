@@ -5,7 +5,7 @@ LIB_PATH=libft
 SRC_PATH=./src/
 BUILD_PATH=./build/
 
-FILE_NAMES=fdf get_next_line get_next_line_utils handle_key handle_error projection init draw
+FILE_NAMES=fdf get_next_line get_next_line_utils handle_key handle_error projection init draw rotate_util
 SRC=$(addprefix $(SRC_PATH), $(addsuffix .c, $(FILE_NAMES)))
 OBJ=$(SRC:$(SRC_PATH)%.c=$(BUILD_PATH)%.o)
 DEP=$(OBJ:.o=.d)
