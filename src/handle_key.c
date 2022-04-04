@@ -87,7 +87,7 @@ static void	amplify(t_map *m, int key)
 int	handle_key(int key, t_map *m)
 {
 	if (key == KEY_ESC)
-		handle_error();
+		handle_error(m);
 	else if (key == KEY_PROJECTION)
 		set_projection(m);
 	else if (key == KEY_UP || key == KEY_DOWN || key == KEY_LEFT || key == KEY_RIGHT)

@@ -72,7 +72,7 @@ typedef struct	s_map
 
 void	init_map(t_map *m);
 void	set_coord(t_map *m);
-void	handle_error();
+void	handle_error(t_map *m);
 int		handle_key(int key, t_map *m);
 int		render_frame(t_map *m);
 void	set_projection(t_map *m);
