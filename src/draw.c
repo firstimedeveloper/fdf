@@ -91,7 +91,7 @@ void draw_line(t_map *m, t_coord a, t_coord b, int color)
 // 	}
 
 // }
-
+#include <stdio.h>
 void	draw_map(t_map *m, int color)
 {
 	int	i;
@@ -134,5 +134,4 @@ void	draw(t_map *m)
 {
 	init_map(m);
 	render_frame(m);
-	mlx_hook(m->win, 2, 0, handle_key, m);
 }

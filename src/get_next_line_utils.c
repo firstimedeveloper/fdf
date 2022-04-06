@@ -6,7 +6,7 @@
 /*   By: juhan <juhan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:41:09 by juhan             #+#    #+#             */
-/*   Updated: 2021/07/28 23:24:25 by juhan            ###   ########.fr       */
+/*   Updated: 2022/04/06 16:33:39 by juhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,32 +113,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ret[i] = '\0';
 	return (ret);
 }
-/*
-static int	ft_find_smaller(size_t a, size_t b)
-{
-	return (a < b ? a : b);
-}
-
-char		*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*ret;
-	size_t	i;
-	size_t	slen;
-
-	if (!s)
-		return (0);
-	slen = ft_strlen(s);
-	len = start > slen ? 0 : ft_find_smaller((slen - start), len);
-	ret = malloc(sizeof(char) * len + 1);
-	if (!ret)
-		return (0);
-	i = 0;
-	while (start < slen && i < len)
-	{
-		ret[i] = s[start + i];
-		i++;
-	}
-	ret[i] = '\0';
-	return (ret);
-}
-*/

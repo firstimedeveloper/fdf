@@ -1,6 +1,5 @@
 #include "fdf.h"
 
-
 static void	translate(t_map *m, int key)
 {
 	switch (key)

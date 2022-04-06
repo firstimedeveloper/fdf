@@ -1,7 +1,7 @@
 #include "fdf.h"
 #include <stdio.h>
 
-void	check_width(t_map *m, char *line)
+static void	check_width(t_map *m, char *line)
 {
 	char	**split_res;
 	char	**cpy;
@@ -18,10 +18,9 @@ void	check_width(t_map *m, char *line)
 	ft_free_all(cpy);
 }
 
-void	check_map(t_map *m, int fd)
+static void	check_map(t_map *m, int fd)
 {
 	char	*line;
-	int		max;
 
 	m->height = 0;
 	m->width = 0;
@@ -34,14 +33,12 @@ void	check_map(t_map *m, int fd)
 		m->height++;
 	}
 	if (m->width > m->height)
-		max = m->width;
+		m->tile_length = (WIN_WIDTH) / m->width;
 	else
-		max = m->height;
-	m->w_diff = (WIN_WIDTH) / max;
-	m->h_diff = (WIN_HEIGHT) / max;
+		m->tile_length = (WIN_HEIGHT) / m->height;
 }
 
-void	parse_map(t_map *m, int fd)
+static void	parse_map(t_map *m, int fd)
 {
 	char	*line;
 	char	**split_res;
@@ -79,14 +76,14 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		ft_putstr_fd("usage: ./fdf [path to .fdf file]\n", 1);
-		return(0);
+		return (0);
 	}
 	fd[0] = open(argv[1], O_RDONLY);
 	fd[1] = open(argv[1], O_RDONLY);
 	if (fd[0] == -1 || fd[1] == -1)
 	{
 		ft_putstr_fd("Error: unable to open file\n", 1);
-		return(1);
+		return (0);
 	}
 	check_map(&m, fd[0]);
 	parse_map(&m, fd[1]);
@@ -96,6 +93,7 @@ int	main(int argc, char **argv)
 	printf("w: %d h: %d\n", m.width, m.height);
 	set_coord(&m);
 	draw(&m);
+	mlx_hook(m.win, 2, 0, handle_key, &m);
 	mlx_loop(m.mlx);
 	return (0);
 }

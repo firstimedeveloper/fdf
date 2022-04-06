@@ -1,10 +1,15 @@
 #ifndef FDF_H
 # define FDF_H
 
+# include "get_next_line.h"
+# include "libft/libft.h"
+# include <fcntl.h>
+# include <math.h>
+# include "minilibx/mlx.h"
+
 # define BUFFER_SIZE 30
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 800
-
 
 # define KEY_ESC 53
 # define KEY_UP 13
@@ -37,8 +42,7 @@ typedef struct	s_map
 	int		height;
 	int		width;
 	t_coord	*map;
-	int		h_diff;
-	int		w_diff;
+	int		tile_length;
 
 	int		z_val;
 
@@ -64,12 +68,6 @@ typedef struct	s_map
 	int		endian;
 } t_map;
 
-# include "get_next_line.h"
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <math.h>
-# include "minilibx/mlx.h"
-
 void	init_map(t_map *m);
 void	set_coord(t_map *m);
 void	handle_error(t_map *m);
@@ -78,7 +76,6 @@ int		render_frame(t_map *m);
 void	set_projection(t_map *m);
 t_coord	project(t_map *m, t_coord coord);
 void	draw(t_map *m);
-
 void	rotate_x(int *y, int *z, double angle);
 void	rotate_y(int *x, int *z, double angle);
 void	rotate_z(int *x, int *y, double angle);
