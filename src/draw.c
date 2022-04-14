@@ -7,63 +7,63 @@ void	ft_mlx_pixel_put(t_map *m, int x, int y, int color)
 	if (x < 0 || x > WIN_WIDTH || y < 0 || y > WIN_HEIGHT)
 		return ;
 	dst = m->addr + (y * m->line_length + x * (m->bpp / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *) dst = color;
 }
 
-void draw_line(t_map *m, t_coord a, t_coord b, int color)
+static void	draw_line_util(int *d, int *s, int a, int b, int y)
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	e2;
+	*d = abs(b - a);
+	if (y)
+		*d = -*d;
+	if (a < b)
+		*s = 1;
+	else
+		*s = -1;
+}
 
-	dx = abs(b.x - a.x);
-	dy = -abs(b.y - a.y);
-	if (a.x < b.x)
-		sx = 1;
-	else
-		sx = -1;
-	if (a.y < b.y)
-		sy = 1;
-	else
-		sy = -1;
-	err = dx + dy;
+void	draw_line(t_map *m, t_coord a, t_coord b, int color)
+{
+	t_coord	d;
+	t_coord	s;
+	int		err[2];
+
+	draw_line_util(&d.x, &s.x, a.x, b.x, 0);
+	draw_line_util(&d.y, &s.y, a.y, b.y, 1);
+	err[0] = d.x + d.y;
 	while (1)
 	{
 		ft_mlx_pixel_put(m, a.x, a.y, color);
 		if (a.x == b.x && a.y == b.y)
 			break ;
-		e2 = 2 * err;
-		if (e2 >= dy)
+		err[1] = 2 * err[0];
+		if (err[1] >= d.y)
 		{
 			if (a.x == b.x)
 				break ;
-			err += dy;
-			a.x += sx;
+			err[0] += d.y;
+			a.x += s.x;
 		}
-		if (e2 <= dx)
+		if (err[1] <= d.x)
 		{
 			if (a.y == b.y)
 				break ;
-			err += dx;
-			a.y += sy;
+			err[0] += d.x;
+			a.y += s.y;
 		}
 	}
+}
 
 //   int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
 //   int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1;
 //   int err = (dx>dy ? dx : -dy)/2, e2;
 
 //   for(;;){
-//     ft_mlx_pixel_put(m, x0,y0, color);   //color the pixel in the matrix for later use.
+//     ft_mlx_pixel_put(m, x0,y0, color);
 //     if (x0==x1 && y0==y1) break;
 //     e2 = err;
 //     if (e2 >-dx) { err -= dy; x0 += sx; }
 //     if (e2 < dy) { err += dx; y0 += sy; }
 //   }
-}
 
 // void	draw_line(t_map *m, int a, int b, int c, int d, color)
 // {
@@ -106,20 +106,25 @@ void	draw_map(t_map *m, int color)
 		{
 			idx = i * m->width + j;
 			if (j > 0)
-				draw_line(m, project(m, m->map[idx - 1]), project(m, m->map[idx]), color);
+				draw_line(m,
+					project(m, m->map[idx - 1]),
+					project(m, m->map[idx]), color);
 			if (i > 0)
-				draw_line(m, project(m, m->map[idx - m->width]), project(m, m->map[idx]), color);
+				draw_line(m,
+					project(m, m->map[idx - m->width]),
+					project(m, m->map[idx]), color);
 		}
 	}
 }
 
 int	render_frame(t_map *m)
 {
-	ft_bzero(m->addr, WIN_WIDTH * WIN_HEIGHT * (m->bpp / 8));
-	int i = 0;
-	int *img;
+	int	i;
+	int	*img;
 
+	i = 0;
 	img = (int *)m->addr;
+	ft_bzero(m->addr, WIN_WIDTH * WIN_HEIGHT * (m->bpp / 8));
 	while (i < WIN_WIDTH * WIN_HEIGHT)
 	{
 		img[i] = 0x202020;

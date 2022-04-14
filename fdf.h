@@ -1,10 +1,15 @@
 #ifndef FDF_H
 # define FDF_H
 
+# include "get_next_line.h"
+# include "libft/libft.h"
+# include <fcntl.h>
+# include <math.h>
+# include "minilibx/mlx.h"
+
 # define BUFFER_SIZE 30
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 800
-
 
 # define KEY_ESC 53
 # define KEY_UP 13
@@ -23,16 +28,18 @@
 # define KEY_ZVAL_POS 43
 # define KEY_ZVAL_NEG 47
 
-typedef struct 	s_coord
+typedef struct s_coord
 {
 	int	x;
 	int	y;
 	int	z;
-} t_coord;
+}	t_coord;
 
-typedef struct	s_map
+typedef struct s_map
 {
-	int		is_ISO;
+	int		fd[2];
+
+	int		is_iso;
 
 	int		height;
 	int		width;
@@ -62,13 +69,7 @@ typedef struct	s_map
 	int		bpp;
 	int		line_length;
 	int		endian;
-} t_map;
-
-# include "get_next_line.h"
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <math.h>
-# include "minilibx/mlx.h"
+}	t_map;
 
 void	init_map(t_map *m);
 void	set_coord(t_map *m);

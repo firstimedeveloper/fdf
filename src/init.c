@@ -36,5 +36,5 @@ void	init_map(t_map *m)
 	m->angle_z = 0;
 	m->z_val = 1;
 	m->zoom = 1;
-	m->is_ISO = 1;
+	m->is_iso = 1;
 }
