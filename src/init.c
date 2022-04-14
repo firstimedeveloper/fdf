@@ -27,8 +27,8 @@ void	init_map(t_map *m)
 	m->win = mlx_new_window(m->mlx, WIN_WIDTH, WIN_HEIGHT, "fdf");
 	m->img = mlx_new_image(m->mlx, WIN_WIDTH, WIN_HEIGHT);
 	m->addr = mlx_get_data_addr(m->img, &m->bpp, &m->line_length, &m->endian);
-	m->camera_x_offset = (m->width / 2) * m->w_diff;
-	m->camera_y_offset = (m->height / 2) * m->h_diff;
+	m->camera_x_offset = (m->width / 2) * m->tile_length;
+	m->camera_y_offset = (m->height / 2) * m->tile_length;
 	m->translate_x = 0;
 	m->translate_y = 0;
 	m->angle_x = 0;

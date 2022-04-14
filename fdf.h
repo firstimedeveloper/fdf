@@ -44,8 +44,7 @@ typedef struct s_map
 	int		height;
 	int		width;
 	t_coord	*map;
-	int		h_diff;
-	int		w_diff;
+	int		tile_length;
 
 	int		z_val;
 
@@ -79,7 +78,6 @@ int		render_frame(t_map *m);
 void	set_projection(t_map *m);
 t_coord	project(t_map *m, t_coord coord);
 void	draw(t_map *m);
-
 void	rotate_x(int *y, int *z, double angle);
 void	rotate_y(int *x, int *z, double angle);
 void	rotate_z(int *x, int *y, double angle);
