@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juhan <juhan@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 15:47:16 by juhan             #+#    #+#             */
+/*   Updated: 2022/04/15 17:33:12 by juhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
 # define FDF_H
 
@@ -37,8 +49,6 @@ typedef struct s_coord
 
 typedef struct s_map
 {
-	int		fd[2];
-
 	int		is_iso;
 
 	int		height;
@@ -77,8 +87,11 @@ int		handle_key(int key, t_map *m);
 int		render_frame(t_map *m);
 void	set_projection(t_map *m);
 t_coord	project(t_map *m, t_coord coord);
+void	draw_line(t_map *m, t_coord a, t_coord b, int color);
 void	draw(t_map *m);
 void	rotate_x(int *y, int *z, double angle);
 void	rotate_y(int *x, int *z, double angle);
 void	rotate_z(int *x, int *y, double angle);
+int		handle_exit(t_map *m);
+void	close_fd_on_error(int fd);
 #endif

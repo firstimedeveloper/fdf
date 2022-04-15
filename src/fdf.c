@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juhan <juhan@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 15:47:16 by juhan             #+#    #+#             */
+/*   Updated: 2022/04/15 17:33:04 by juhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 #include <stdio.h>
 
-static void	check_width(t_map *m, char *line)
+static int	check_width(t_map *m, char *line)
 {
 	char	**split_res;
 	char	**cpy;
@@ -9,13 +21,14 @@ static void	check_width(t_map *m, char *line)
 	split_res = ft_split(line, ' ');
 	cpy = split_res;
 	if (!split_res)
-		exit(0);
+		return (0);
 	while (*split_res)
 	{
 		split_res++;
 		m->width++;
 	}
 	ft_free_all(cpy);
+	return (1);
 }
 
 static void	check_map(t_map *m, int fd)
@@ -25,7 +38,8 @@ static void	check_map(t_map *m, int fd)
 	m->height = 0;
 	m->width = 0;
 	line = get_next_line(fd);
-	check_width(m, line);
+	if (!check_width(m, line))
+		close_fd_on_error(fd);
 	while (line)
 	{
 		free(line);
@@ -38,17 +52,14 @@ static void	check_map(t_map *m, int fd)
 		m->tile_length = (WIN_HEIGHT) / m->height;
 }
 
-static void	parse_map(t_map *m, int fd)
+static int	parse_map_util(t_map *m, int fd)
 {
-	char	*line;
 	char	**split_res;
 	char	**cpy;
-	int		temp;
+	char	*line;
 	int		i;
+	int		temp;
 
-	m->map = malloc(m->height * m->width * sizeof(t_coord));
-	if (!m->map)
-		return ;
 	line = get_next_line(fd);
 	i = 0;
 	while (line)
@@ -56,7 +67,7 @@ static void	parse_map(t_map *m, int fd)
 		split_res = ft_split(line, ' ');
 		cpy = split_res;
 		if (!split_res)
-			return ;
+			return (0);
 		while (*split_res)
 		{
 			temp = ft_atoi(*split_res);
@@ -67,6 +78,16 @@ static void	parse_map(t_map *m, int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
+	return (1);
+}
+
+static void	parse_map(t_map *m, int fd)
+{
+	m->map = malloc(m->height * m->width * sizeof(t_coord));
+	if (!m->map)
+		close_fd_on_error(fd);
+	if (!parse_map_util(m, fd))
+		close_fd_on_error(fd);
 }
 
 int	main(int argc, char **argv)
@@ -81,8 +102,6 @@ int	main(int argc, char **argv)
 	}
 	fd[0] = open(argv[1], O_RDONLY);
 	fd[1] = open(argv[1], O_RDONLY);
-	m.fd[0] = fd[0];
-	m.fd[1] = fd[1];
 	if (fd[0] == -1 || fd[1] == -1)
 	{
 		ft_putstr_fd("Error: unable to open file\n", 1);
@@ -94,7 +113,5 @@ int	main(int argc, char **argv)
 	close(fd[1]);
 	set_coord(&m);
 	draw(&m);
-	mlx_hook(m.win, 2, 0, handle_key, &m);
-	mlx_loop(m.mlx);
 	return (0);
 }

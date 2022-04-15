@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_key.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juhan <juhan@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 15:47:16 by juhan             #+#    #+#             */
+/*   Updated: 2022/04/15 15:48:58 by juhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 static void	translate(t_map *m, int key)
@@ -57,7 +69,7 @@ static void	amplify(t_map *m, int key)
 int	handle_key(int key, t_map *m)
 {
 	if (key == KEY_ESC)
-		handle_error(m);
+		handle_exit(m);
 	else if (key == KEY_PROJECTION)
 		set_projection(m);
 	else if (key == KEY_UP || key == KEY_DOWN

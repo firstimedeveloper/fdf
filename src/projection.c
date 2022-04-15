@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   projection.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juhan <juhan@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 15:47:16 by juhan             #+#    #+#             */
+/*   Updated: 2022/04/15 15:50:14 by juhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	set_projection(t_map *m)
@@ -10,8 +22,8 @@ void	set_projection(t_map *m)
 
 void	iso(int *x, int *y, int z)
 {
-	int prev_x;
-	int prev_y;
+	int	prev_x;
+	int	prev_y;
 
 	prev_x = *x;
 	prev_y = *y;
@@ -31,8 +43,6 @@ t_coord	project(t_map *m, t_coord coord)
 	rotate_z(&coord.x, &coord.y, m->angle_z);
 	if (m->is_iso)
 		iso(&coord.x, &coord.y, coord.z);
-	// coord.x += m->camera_x_offset;
-	// coord.y += m->camera_y_offset * m->zoom;
 	coord.x += WIN_WIDTH / 2;
 	coord.y += WIN_HEIGHT / 2;
 	coord.x += m->translate_x;
