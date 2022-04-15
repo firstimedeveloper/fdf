@@ -6,12 +6,11 @@
 /*   By: juhan <juhan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:47:16 by juhan             #+#    #+#             */
-/*   Updated: 2022/04/15 17:33:04 by juhan            ###   ########.fr       */
+/*   Updated: 2022/04/15 18:03:09 by juhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 static int	check_width(t_map *m, char *line)
 {
